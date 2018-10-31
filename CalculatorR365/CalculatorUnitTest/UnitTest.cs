@@ -84,5 +84,19 @@ namespace CalculatorUnitTest
                 Assert.IsTrue(!string.IsNullOrEmpty(e.Message));
             }           
         }
+
+        [TestMethod]
+        public void TestIgnoreLargeNumbers()
+        {
+            Calculate calc = new Calculate();
+
+            string numbers = "1,3,1001,4,2000";
+            int result = calc.Add(numbers);
+            Assert.AreEqual(result, 8);
+
+            numbers = "1001,1500,2000";
+            result = calc.Add(numbers);
+            Assert.AreEqual(result, 0);
+        }
     }
 }

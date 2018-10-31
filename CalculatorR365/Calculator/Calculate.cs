@@ -38,7 +38,7 @@ namespace Calculator
                 throw new Exception(string.Format("Negatives are not allowed: {0}", allNegatives));
             }
 
-            int sum = convertedToInts.Sum();
+            int sum = convertedToInts.Where(n => n < 1000).Sum();
 
             return sum;
 
