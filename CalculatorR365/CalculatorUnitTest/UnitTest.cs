@@ -41,5 +41,31 @@ namespace CalculatorUnitTest
             result = calc.Add(numbers);
             Assert.AreEqual(result, 0);
         }
+
+        [TestMethod]
+        public void TestAddWithDelimiters()
+        {
+            Calculate calc = new Calculate();
+
+            string numbers = "//;\n1;2";
+            int result = calc.Add(numbers);
+            Assert.AreEqual(result, 3);
+
+            numbers = "//?\n1?2?5";
+            result = calc.Add(numbers);
+            Assert.AreEqual(result, 8);
+
+            numbers = "//?\n1?2,5";
+            result = calc.Add(numbers);
+            Assert.AreEqual(result, 0);
+
+            numbers = "//?\n";
+            result = calc.Add(numbers);
+            Assert.AreEqual(result, 0);
+
+            numbers = "//";
+            result = calc.Add(numbers);
+            Assert.AreEqual(result, 0);
+        }
     }
 }
