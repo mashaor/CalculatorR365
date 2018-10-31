@@ -13,18 +13,18 @@ namespace Calculator
                 return 0;
             }
 
-            var delimiters = ParseDelimiters(numbers);
+            var delimiters = ParseDelimiters(numbers).ToArray();
 
             var extractedNumbersString = ExtractNumbersString(numbers);
 
-            var splitByDelimiter = extractedNumbersString.Trim().Split(delimiters);
+            var splitByDelimiters = extractedNumbersString.Trim().Split(delimiters, StringSplitOptions.None);
 
             List<int> convertedToInts = new List<int>();
 
             try
             {
                 //assuming: sum up only of all members are integers. otherwise return 0
-                convertedToInts = Array.ConvertAll(splitByDelimiter, int.Parse).ToList();
+                convertedToInts = Array.ConvertAll(splitByDelimiters, int.Parse).ToList();
             }
             catch
             {
@@ -44,29 +44,46 @@ namespace Calculator
 
         }
 
-        public char[] ParseDelimiters(string numbers)
+        public List<string> ParseDelimiters(string numbers)
         {
             //assuming only the new line is a valid delimiter
-            List<char> defaultDelimiters = new List<char>() { '\n' };
+            List<string> delimiters = new List<string>() { "\n" };
 
             if (IsDelimiterSpecified(numbers))
             {
-                defaultDelimiters.Add(numbers[2]);
+                if (numbers[2] == '[')
+                {
+                    //Miltiple delimiters
+                    var delimiterBrackets = (new List<char>() { '[', ']' }).ToArray();
+                    int indexEndOfDelimiters = numbers.IndexOf('\n') - 1;
+                    var extractedDelimiters = numbers.Substring(0, indexEndOfDelimiters)
+                                                     .Replace("//", string.Empty)
+                                                     .Split(delimiterBrackets)
+                                                     .Where(s => string.IsNullOrEmpty(s) == false)
+                                                     .ToList();
+
+                    delimiters.AddRange(extractedDelimiters);
+                }
+                else
+                {
+                    //single delimiter
+                    delimiters.Add(numbers[2].ToString());
+                }
             }
             else
             {
-                defaultDelimiters.Add(',');
+                //no delimiters specified by the user
+                delimiters.Add(",");
             }
 
-            return defaultDelimiters.ToArray();
+            return delimiters;
         }
 
         public string ExtractNumbersString(string numbers)
         {
-
             if (IsDelimiterSpecified(numbers))
             {
-                int indexEndOfDelimiters = numbers.IndexOf("\n");
+                int indexEndOfDelimiters = numbers.IndexOf('\n');
                 return numbers.Substring(indexEndOfDelimiters + 1);
             }
 

@@ -98,5 +98,27 @@ namespace CalculatorUnitTest
             result = calc.Add(numbers);
             Assert.AreEqual(result, 0);
         }
+
+        [TestMethod]
+        public void TestAddWithLongDelimiters()
+        {
+            Calculate calc = new Calculate();
+
+            string numbers = "//[***]\n1***2***6";
+            int result = calc.Add(numbers);
+            Assert.AreEqual(result, 9);
+
+            numbers = "//[***][^^]\n1***2^^6***9^^3";
+            result = calc.Add(numbers);
+            Assert.AreEqual(result, 21);
+
+            numbers = "//[*][%]\n1*2%3";
+            result = calc.Add(numbers);
+            Assert.AreEqual(result, 6);
+
+            numbers = "//[*][%]\n1";
+            result = calc.Add(numbers);
+            Assert.AreEqual(result, 1);
+        }
     }
 }
