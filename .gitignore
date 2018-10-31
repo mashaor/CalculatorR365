@@ -1,0 +1,12 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/CalculatorR365/packages
+/CalculatorR365/Calculator/obj/Debug
+/CalculatorR365/Calculator/bin/Debug
+/CalculatorR365/CalculatorR365/obj/Debug
+/CalculatorR365/CalculatorR365/bin/Debug
+/CalculatorR365/CalculatorUnitTest/bin/Debug
+/CalculatorR365/CalculatorUnitTest/obj/Debug
+/CalculatorR365/.vs/CalculatorR365/v15/Server/sqlite3
