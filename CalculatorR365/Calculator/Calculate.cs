@@ -19,17 +19,29 @@ namespace Calculator
 
             var splitByDelimiter = extractedNumbersString.Trim().Split(delimiters);
 
+            List<int> convertedToInts = new List<int>();
+
             try
             {
                 //assuming: sum up only of all members are integers. otherwise return 0
-                var convertedToInts = Array.ConvertAll(splitByDelimiter, int.Parse);
-
-                return convertedToInts.Sum();
+                convertedToInts = Array.ConvertAll(splitByDelimiter, int.Parse).ToList();
             }
             catch
             {
                 return 0;
             }
+
+            //check for any negative numbers
+            if (convertedToInts.Any(n => n < 0))
+            {
+                var allNegatives = String.Join(", ", convertedToInts.Where(n => n < 0));
+                throw new Exception(string.Format("Negatives are not allowed: {0}", allNegatives));
+            }
+
+            int sum = convertedToInts.Sum();
+
+            return sum;
+
         }
 
         public char[] ParseDelimiters(string numbers)
@@ -63,12 +75,12 @@ namespace Calculator
 
         private bool IsDelimiterSpecified(string numbers)
         {
-            if(numbers.Length < 3)
+            if (numbers.Length < 3)
             {
                 return false;
             }
 
-            var firstTwoChars = numbers.Substring(0,2);
+            var firstTwoChars = numbers.Substring(0, 2);
 
             return firstTwoChars == "//";
         }

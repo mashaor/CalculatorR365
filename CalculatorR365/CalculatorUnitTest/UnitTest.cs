@@ -1,5 +1,6 @@
 ﻿using Calculator;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 
 namespace CalculatorUnitTest
 {
@@ -66,6 +67,22 @@ namespace CalculatorUnitTest
             numbers = "//";
             result = calc.Add(numbers);
             Assert.AreEqual(result, 0);
+        }
+
+        [TestMethod]
+        public void TestNegatives()
+        {
+            Calculate calc = new Calculate();
+
+            try
+            {
+                string numbers = "//;\n1;-2";
+                int result = calc.Add(numbers);
+            }
+            catch (Exception e)
+            {
+                Assert.IsTrue(!string.IsNullOrEmpty(e.Message));
+            }           
         }
     }
 }

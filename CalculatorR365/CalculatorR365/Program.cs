@@ -20,10 +20,18 @@ namespace CalculatorR365
                 numbers = Console.ReadLine();
             }
 
-            Calculate calc = new Calculate();
-            result = calc.Add(numbers);
+            try
+            {
+                Calculate calc = new Calculate();
+                result = calc.Add(numbers);
 
-            Console.WriteLine("Result is: " + result);
+                Console.WriteLine("Result is: " + result);
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+
             Console.ReadKey();
         }
     }
