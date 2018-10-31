@@ -12,7 +12,9 @@ namespace Calculator
                 return 0;
             }
 
-            var splitByDelimiter = numbers.Trim().Split(',');
+            var delimiters = new char[] { ',', '\n' };
+
+            var splitByDelimiter = numbers.Trim().Split(delimiters);
 
             try
             {

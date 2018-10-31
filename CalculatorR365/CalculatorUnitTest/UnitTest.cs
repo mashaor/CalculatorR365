@@ -27,5 +27,19 @@ namespace CalculatorUnitTest
             result = calc.Add(numbers);
             Assert.AreEqual(result, 3);
         }
+
+        [TestMethod]
+        public void TestAddWithNewLine()
+        {
+            Calculate calc = new Calculate();
+
+            string numbers = "1\n2,3";
+            int result = calc.Add(numbers);
+            Assert.AreEqual(result, 6);
+
+            numbers = "1\n,2,3";
+            result = calc.Add(numbers);
+            Assert.AreEqual(result, 0);
+        }
     }
 }
