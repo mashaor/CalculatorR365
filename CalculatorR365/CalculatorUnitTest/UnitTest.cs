@@ -120,5 +120,15 @@ namespace CalculatorUnitTest
             result = calc.Add(numbers);
             Assert.AreEqual(result, 1);
         }
+
+        [TestMethod]
+        public void TestDelimiters()
+        {
+            Calculate calc = new Calculate();
+
+            string delimiters = "//;\n";
+            var result = calc.ParseDelimiters(delimiters);
+            Assert.AreEqual(result.Count, 2);
+        }
     }
 }

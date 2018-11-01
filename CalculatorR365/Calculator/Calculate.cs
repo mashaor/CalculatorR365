@@ -8,9 +8,22 @@ namespace Calculator
     {
         public int Add(string numbers)
         {
+            List<int> convertedToInts = ParseInput(numbers);
+
+            convertedToInts = ApplyRules(convertedToInts);
+
+            int sum = convertedToInts.Sum();
+
+            return sum;
+        }
+
+        public List<int> ParseInput(string numbers)
+        {
+            List<int> convertedToInts = new List<int>();
+
             if (string.IsNullOrEmpty(numbers) || string.IsNullOrWhiteSpace(numbers))
             {
-                return 0;
+                return convertedToInts;
             }
 
             var delimiters = ParseDelimiters(numbers).ToArray();
@@ -19,17 +32,18 @@ namespace Calculator
 
             var splitByDelimiters = extractedNumbersString.Trim().Split(delimiters, StringSplitOptions.None);
 
-            List<int> convertedToInts = new List<int>();
-
             try
             {
                 //assuming: sum up only of all members are integers. otherwise return 0
                 convertedToInts = Array.ConvertAll(splitByDelimiters, int.Parse).ToList();
             }
             catch
-            {
-                return 0;
-            }
+            {}
+
+            return convertedToInts;
+        }
+        private List<int> ApplyRules(List<int> convertedToInts)
+        {
 
             //check for any negative numbers
             if (convertedToInts.Any(n => n < 0))
@@ -38,10 +52,10 @@ namespace Calculator
                 throw new Exception(string.Format("Negatives are not allowed: {0}", allNegatives));
             }
 
-            int sum = convertedToInts.Where(n => n < 1000).Sum();
+            //exclude numbers larger than 1000
+            convertedToInts = convertedToInts.Where(n => n < 1000).ToList();
 
-            return sum;
-
+            return convertedToInts;
         }
 
         public List<string> ParseDelimiters(string numbers)
@@ -51,7 +65,7 @@ namespace Calculator
 
             if (IsDelimiterSpecified(numbers))
             {
-                if (numbers[2] == '[')
+                if (numbers.Contains('[') && numbers.Contains(']'))
                 {
                     //Miltiple delimiters
                     var delimiterBrackets = (new List<char>() { '[', ']' }).ToArray();
@@ -67,7 +81,8 @@ namespace Calculator
                 else
                 {
                     //single delimiter
-                    delimiters.Add(numbers[2].ToString());
+                    var indexOfDelimiterEscape = numbers.IndexOf("//");
+                    delimiters.Add(numbers.Substring(indexOfDelimiterEscape + 2, 1));
                 }
             }
             else
@@ -97,9 +112,9 @@ namespace Calculator
                 return false;
             }
 
-            var firstTwoChars = numbers.Substring(0, 2);
+            var indexOfDelimiterEscape = numbers.IndexOf("//");
 
-            return firstTwoChars == "//";
+            return indexOfDelimiterEscape > -1;
         }
     }
 }
