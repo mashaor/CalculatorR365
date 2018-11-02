@@ -14,19 +14,19 @@ namespace CalculatorUnitTest
             Calculate calc = new Calculate();
 
             string numbers = string.Empty;
-            int result = calc.ParseInputString(numbers);
+            int result = calc.ParseInputStringAndCalculate(numbers);
             Assert.AreEqual(result, 0);
 
             numbers = "test";
-            result = calc.ParseInputString(numbers);
+            result = calc.ParseInputStringAndCalculate(numbers);
             Assert.AreEqual(result, 0);
 
             numbers = "1";
-            result = calc.ParseInputString(numbers);
+            result = calc.ParseInputStringAndCalculate(numbers);
             Assert.AreEqual(result, 1);
 
             numbers = "1,2";
-            result = calc.ParseInputString(numbers);
+            result = calc.ParseInputStringAndCalculate(numbers);
             Assert.AreEqual(result, 3);
         }
 
@@ -36,11 +36,11 @@ namespace CalculatorUnitTest
             Calculate calc = new Calculate();
 
             string numbers = "1\n2,3";
-            int result = calc.ParseInputString(numbers);
+            int result = calc.ParseInputStringAndCalculate(numbers);
             Assert.AreEqual(result, 6);
 
             numbers = "1\n,2,3";
-            result = calc.ParseInputString(numbers);
+            result = calc.ParseInputStringAndCalculate(numbers);
             Assert.AreEqual(result, 0);
         }
 
@@ -50,23 +50,23 @@ namespace CalculatorUnitTest
             Calculate calc = new Calculate();
 
             string numbers = "//;\n1;2";
-            int result = calc.ParseInputString(numbers);
+            int result = calc.ParseInputStringAndCalculate(numbers);
             Assert.AreEqual(result, 3);
 
             numbers = "//?\n1?2?5";
-            result = calc.ParseInputString(numbers);
+            result = calc.ParseInputStringAndCalculate(numbers);
             Assert.AreEqual(result, 8);
 
             numbers = "//?\n1?2,5";
-            result = calc.ParseInputString(numbers);
+            result = calc.ParseInputStringAndCalculate(numbers);
             Assert.AreEqual(result, 0);
 
             numbers = "//?\n";
-            result = calc.ParseInputString(numbers);
+            result = calc.ParseInputStringAndCalculate(numbers);
             Assert.AreEqual(result, 0);
 
             numbers = "//";
-            result = calc.ParseInputString(numbers);
+            result = calc.ParseInputStringAndCalculate(numbers);
             Assert.AreEqual(result, 0);
         }
 
@@ -78,7 +78,7 @@ namespace CalculatorUnitTest
             try
             {
                 string numbers = "//;\n1;-2";
-                int result = calc.ParseInputString(numbers);
+                int result = calc.ParseInputStringAndCalculate(numbers);
             }
             catch (Exception e)
             {
@@ -92,11 +92,11 @@ namespace CalculatorUnitTest
             Calculate calc = new Calculate();
 
             string numbers = "1,3,1001,4,2000";
-            int result = calc.ParseInputString(numbers);
+            int result = calc.ParseInputStringAndCalculate(numbers);
             Assert.AreEqual(result, 8);
 
             numbers = "1001,1500,2000";
-            result = calc.ParseInputString(numbers);
+            result = calc.ParseInputStringAndCalculate(numbers);
             Assert.AreEqual(result, 0);
         }
 
@@ -106,19 +106,19 @@ namespace CalculatorUnitTest
             Calculate calc = new Calculate();
 
             string numbers = "//[***]\n1***2***6";
-            int result = calc.ParseInputString(numbers);
+            int result = calc.ParseInputStringAndCalculate(numbers);
             Assert.AreEqual(result, 9);
 
             numbers = "//[***][^^]\n1***2^^6***9^^3";
-            result = calc.ParseInputString(numbers);
+            result = calc.ParseInputStringAndCalculate(numbers);
             Assert.AreEqual(result, 21);
 
             numbers = "//[*][%]\n1*2%3";
-            result = calc.ParseInputString(numbers);
+            result = calc.ParseInputStringAndCalculate(numbers);
             Assert.AreEqual(result, 6);
 
             numbers = "//[*][%]\n1";
-            result = calc.ParseInputString(numbers);
+            result = calc.ParseInputStringAndCalculate(numbers);
             Assert.AreEqual(result, 1);
         }
 

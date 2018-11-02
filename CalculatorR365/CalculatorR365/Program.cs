@@ -24,7 +24,7 @@ namespace CalculatorR365
             {
                 Calculate calc = new Calculate();
                 string preParseNewLines = numbers.Replace("\\n","\n");
-                result = calc.ParseInputString(preParseNewLines);
+                result = calc.ParseInputStringAndCalculate(preParseNewLines);
 
                 Console.WriteLine("Result is: " + result);
             }

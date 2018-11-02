@@ -7,30 +7,23 @@ namespace Calculator
 {
     public class Calculate
     {
-        public int ParseInputString(string numbers)
+        public int ParseInputStringAndCalculate(string numbers)
         {
-            CalculationObject calcObj = new CalculationObject();
-
-            List<int> convertedToInts = ParseInput(numbers);
-
-            convertedToInts = ApplyRules(convertedToInts);
-
-            calcObj.InputNumbers = convertedToInts;
-
-            calcObj.Operation = "+";
-
+            CalculationObject calcObj = ExtractOperationDelimiterNumbers(numbers);
             int result = calcObj.PerformCalculation();
 
             return result;
         }
 
-        public List<int> ParseInput(string numbers)
+        public CalculationObject ExtractOperationDelimiterNumbers(string numbers)
         {
+            CalculationObject calcObj = new CalculationObject();
+
             List<int> convertedToInts = new List<int>();
 
             if (string.IsNullOrEmpty(numbers) || string.IsNullOrWhiteSpace(numbers))
             {
-                return convertedToInts;
+                return calcObj;
             }
 
             var delimiters = ParseDelimiters(numbers).ToArray();
@@ -47,7 +40,13 @@ namespace Calculator
             catch
             { }
 
-            return convertedToInts;
+            convertedToInts = ApplyRules(convertedToInts);
+
+            calcObj.InputNumbers = convertedToInts;
+
+            calcObj.Operation = "+";
+
+            return calcObj;
         }
         private List<int> ApplyRules(List<int> convertedToInts)
         {
