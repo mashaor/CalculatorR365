@@ -7,15 +7,21 @@ namespace Calculator
 {
     public class Calculate
     {
-        public int Add(string numbers)
+        public int ParseInputString(string numbers)
         {
+            CalculationObject calcObj = new CalculationObject();
+
             List<int> convertedToInts = ParseInput(numbers);
 
             convertedToInts = ApplyRules(convertedToInts);
 
-            int sum = convertedToInts.Sum();
+            calcObj.InputNumbers = convertedToInts;
 
-            return sum;
+            calcObj.Operation = "+";
+
+            int result = PerformCalculation(calcObj);
+
+            return result;
         }
 
         public int PerformCalculation(CalculationObject calcObj)
