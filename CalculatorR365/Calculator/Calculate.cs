@@ -70,14 +70,26 @@ namespace Calculator
             return convertedToInts;
         }
 
-        public string ParseOperation(string numbers)
+        public Operations ParseOperation(string numbers)
         {
             if (IsOperationSpecified(numbers))
             {
-                return numbers.Substring(0, 1);
+                var oprtationsSign = numbers.Substring(0, 1);
+
+                switch (oprtationsSign)
+                {
+                    case "+":
+                        return Operations.Add;
+                    case "*":
+                        return Operations.Multiply;
+                    case "-":
+                        return Operations.Subtract;
+                    case "/":
+                        return Operations.Divide;
+                }
             }
 
-            return "+";
+            return Operations.Add;
         }
 
 
