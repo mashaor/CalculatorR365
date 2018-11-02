@@ -2,11 +2,15 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace Calculator
 {
     public class Calculate
     {
+        private static List<string> AvaiableOperations = new List<string>() { "+\n", "-\n", "*\n", "/\n" };
+
+
         public int ParseInputStringAndCalculate(string numbers)
         {
             CalculationObject calcObj = ExtractOperationDelimiterNumbers(numbers);
@@ -19,6 +23,8 @@ namespace Calculator
         {
             CalculationObject calcObj = new CalculationObject();
 
+            calcObj.Operation = ParseOperation(numbers);
+
             List<int> convertedToInts = new List<int>();
 
             if (string.IsNullOrEmpty(numbers) || string.IsNullOrWhiteSpace(numbers))
@@ -30,7 +36,7 @@ namespace Calculator
 
             var extractedNumbersString = ExtractNumbersString(numbers);
 
-            var splitByDelimiters = extractedNumbersString.Trim().Split(delimiters, StringSplitOptions.None);
+            var splitByDelimiters = extractedNumbersString.Trim().Split(delimiters, StringSplitOptions.RemoveEmptyEntries);
 
             try
             {
@@ -44,7 +50,7 @@ namespace Calculator
 
             calcObj.InputNumbers = convertedToInts;
 
-            calcObj.Operation = "+";
+
 
             return calcObj;
         }
@@ -64,22 +70,32 @@ namespace Calculator
             return convertedToInts;
         }
 
+        public string ParseOperation(string numbers)
+        {
+            if (IsOperationSpecified(numbers))
+            {
+                return numbers.Substring(0, 1);
+            }
+
+            return "+";
+        }
+
+
         public List<string> ParseDelimiters(string numbers)
         {
-            //assuming only the new line is a valid delimiter
-            List<string> delimiters = new List<string>() { "\n" };
+            List<string> delimiters = new List<string>();
 
             if (IsDelimiterSpecified(numbers))
             {
-                if (numbers.Contains('[') && numbers.Contains(']'))
+                string multipleDelimitersPattern = @"\[([^)]+)\]";
+                Match delimitersExtracted = Regex.Match(numbers, multipleDelimitersPattern);
+
+                if (string.IsNullOrEmpty(delimitersExtracted.Value) == false)
                 {
                     //Miltiple delimiters
                     var delimiterBrackets = (new List<char>() { '[', ']' }).ToArray();
-                    int indexEndOfDelimiters = numbers.IndexOf('\n') - 1;
-                    var extractedDelimiters = numbers.Substring(0, indexEndOfDelimiters)
-                                                     .Replace("//", string.Empty)
-                                                     .Split(delimiterBrackets)
-                                                     .Where(s => string.IsNullOrEmpty(s) == false)
+                    var extractedDelimiters = delimitersExtracted.Value
+                                                     .Split(delimiterBrackets, StringSplitOptions.RemoveEmptyEntries)
                                                      .ToList();
 
                     delimiters.AddRange(extractedDelimiters);
@@ -93,8 +109,9 @@ namespace Calculator
             }
             else
             {
-                //no delimiters specified by the user
+                //no delimiters specified by the user - add default
                 delimiters.Add(",");
+                delimiters.Add("\n");
             }
 
             return delimiters;
@@ -104,10 +121,16 @@ namespace Calculator
         {
             if (IsDelimiterSpecified(numbers))
             {
-                int indexEndOfDelimiters = numbers.IndexOf('\n');
-                return numbers.Substring(indexEndOfDelimiters + 1);
+                //get everything after the delimiters
+                var indexOfDelimiterEscape = numbers.IndexOf("//");
+                int indexEndOfDelimiters = numbers.Substring(indexOfDelimiterEscape + 2).IndexOf('\n');
+                return numbers.Substring(indexEndOfDelimiters + indexOfDelimiterEscape + 3);
             }
-
+            else if (IsOperationSpecified(numbers))
+            {
+                //get everything after the operation
+                return numbers.Substring(3);
+            }
             return numbers;
         }
 
@@ -121,6 +144,22 @@ namespace Calculator
             var indexOfDelimiterEscape = numbers.IndexOf("//");
 
             return indexOfDelimiterEscape > -1;
+        }
+        private bool IsOperationSpecified(string numbers)
+        {
+            if (numbers.Length < 3)
+            {
+                return false;
+            }
+
+            string possibleOperation = numbers.Substring(0, 2);
+
+            if (AvaiableOperations.Contains(possibleOperation))
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }

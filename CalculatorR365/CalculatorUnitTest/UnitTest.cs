@@ -1,7 +1,6 @@
 ﻿using Calculator;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Collections.Generic;
 
 namespace CalculatorUnitTest
 {
@@ -41,7 +40,7 @@ namespace CalculatorUnitTest
 
             numbers = "1\n,2,3";
             result = calc.ParseInputStringAndCalculate(numbers);
-            Assert.AreEqual(result, 0);
+            Assert.AreEqual(result, 6);
         }
 
         [TestMethod]
@@ -123,43 +122,23 @@ namespace CalculatorUnitTest
         }
 
         [TestMethod]
-        public void TestDelimiters()
+        public void TestMultiply()
         {
             Calculate calc = new Calculate();
 
-            string delimiters = "//;\n";
-            var result = calc.ParseDelimiters(delimiters);
-            Assert.AreEqual(result.Count, 2);
+            string numbers = "*\n//[***]\n1***2***6";
+            int result = calc.ParseInputStringAndCalculate(numbers);
+            Assert.AreEqual(result, 12);
+
+            numbers = "*\n//[*][%]\n1";
+            result = calc.ParseInputStringAndCalculate(numbers);
+            Assert.AreEqual(result, 1);
+
+            numbers = "*\n1,3,1001,4,2000";
+            result = calc.ParseInputStringAndCalculate(numbers);
+            Assert.AreEqual(result, 12);
+
         }
 
-        //[TestMethod]
-        //public void TestMultiply()
-        //{
-        //    Calculate calc = new Calculate();
-
-        //    List<int> input = new List<int>() { 2, 3, 6 };
-        //    var result = calc.Multiply(input);
-        //    Assert.AreEqual(result, 36);
-        //}
-
-        //[TestMethod]
-        //public void TestDivide()
-        //{
-        //    Calculate calc = new Calculate();
-
-        //    List<int> input = new List<int>() { 100, 20, 5 };
-        //    var result = calc.Divide(input);
-        //    Assert.AreEqual(result, 1);
-        //}
-
-        //[TestMethod]
-        //public void TestSubtract()
-        //{
-        //    Calculate calc = new Calculate();
-
-        //    List<int> input = new List<int>() { 36, 6, 12 };
-        //    var result = calc.Subtract(input);
-        //    Assert.AreEqual(result, 18);
-        //}
     }
 }
