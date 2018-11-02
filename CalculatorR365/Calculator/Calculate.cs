@@ -47,28 +47,9 @@ namespace Calculator
             catch
             { }
 
-            convertedToInts = ApplyRules(convertedToInts);
-
             calcObj.InputNumbers = convertedToInts;
 
-
-
             return calcObj;
-        }
-        private List<int> ApplyRules(List<int> convertedToInts)
-        {
-
-            //check for any negative numbers
-            if (convertedToInts.Any(n => n < 0))
-            {
-                var allNegatives = String.Join(", ", convertedToInts.Where(n => n < 0));
-                throw new Exception(string.Format("Negatives are not allowed: {0}", allNegatives));
-            }
-
-            //exclude numbers larger than 1000
-            convertedToInts = convertedToInts.Where(n => n < 1000).ToList();
-
-            return convertedToInts;
         }
 
         public SupportedOperations ParseOperation(string numbers)
