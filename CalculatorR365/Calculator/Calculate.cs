@@ -129,7 +129,7 @@ namespace Calculator
             else if (IsOperationSpecified(numbers))
             {
                 //get everything after the operation
-                return numbers.Substring(3);
+                return numbers.Substring(2);
             }
             return numbers;
         }

@@ -140,5 +140,44 @@ namespace CalculatorUnitTest
 
         }
 
+
+        [TestMethod]
+        public void TestSubtract()
+        {
+            Calculate calc = new Calculate();
+
+            string numbers = "-\n//[***]\n6***1***2";
+            int result = calc.ParseInputStringAndCalculate(numbers);
+            Assert.AreEqual(result, 3);
+
+            numbers = "-\n//[*][%]\n1";
+            result = calc.ParseInputStringAndCalculate(numbers);
+            Assert.AreEqual(result, 1);
+
+            numbers = "-\n7,2,1001,1,2000";
+            result = calc.ParseInputStringAndCalculate(numbers);
+            Assert.AreEqual(result, 4);
+
+        }
+
+        [TestMethod]
+        public void TestDivide()
+        {
+            Calculate calc = new Calculate();
+
+            string numbers = "/\n//[***]\n20***2***5";
+            int result = calc.ParseInputStringAndCalculate(numbers);
+            Assert.AreEqual(result, 2);
+
+            numbers = "/\n//[*][%]\n1";
+            result = calc.ParseInputStringAndCalculate(numbers);
+            Assert.AreEqual(result, 1);
+
+            numbers = "/\n16,4,1001,2,2000";
+            result = calc.ParseInputStringAndCalculate(numbers);
+            Assert.AreEqual(result, 2);
+
+        }
+
     }
 }
