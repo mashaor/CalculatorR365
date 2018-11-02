@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Domain;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -15,6 +16,84 @@ namespace Calculator
             int sum = convertedToInts.Sum();
 
             return sum;
+        }
+
+        public int PerformCalculation(CalculationObject calcObj)
+        {
+            int result = 0;
+            switch (calcObj.Operation)
+            {
+                case "+":
+                    result = Add(calcObj.InputNumbers);
+                    break;
+                case "*":
+                    result = Multiply(calcObj.InputNumbers);
+                    break;
+                case "-":
+                    result = Subtract(calcObj.InputNumbers);
+                    break;
+                case "/":
+                    result = Divide(calcObj.InputNumbers);
+                    break;
+            }
+
+            return result;
+        }
+
+        public int Add(List<int> input)
+        {
+            int result = 0;
+
+            if (input != null)
+            {
+                result = input.Sum();
+            }
+
+            return result;
+        }
+
+        public int Multiply(List<int> input)
+        {
+            int result = 0;
+
+            if (input != null)
+            {
+                result = input.Aggregate(1, (a, b) => a * b);
+            }
+
+            return result;
+        }
+
+        public int Divide(List<int> input)
+        {
+            int result = 0;
+
+            if (input != null && input.Count > 0)
+            {
+                result = input[0];
+
+                for (int i = 1; i < input.Count; i++)
+                {
+                    if (input[i] != 0)
+                    {
+                        result /= input[i];
+                    }
+                }
+            }
+
+            return result;
+        }
+
+        public int Subtract(List<int> input)
+        {
+            int result = input[0];
+
+            for (int i = 1; i < input.Count; i++)
+            {
+                result -= input[i];
+            }
+
+            return result;
         }
 
         public List<int> ParseInput(string numbers)
@@ -38,7 +117,7 @@ namespace Calculator
                 convertedToInts = Array.ConvertAll(splitByDelimiters, int.Parse).ToList();
             }
             catch
-            {}
+            { }
 
             return convertedToInts;
         }

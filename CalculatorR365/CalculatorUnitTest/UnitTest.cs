@@ -1,6 +1,7 @@
 ﻿using Calculator;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Collections.Generic;
 
 namespace CalculatorUnitTest
 {
@@ -82,7 +83,7 @@ namespace CalculatorUnitTest
             catch (Exception e)
             {
                 Assert.IsTrue(!string.IsNullOrEmpty(e.Message));
-            }           
+            }
         }
 
         [TestMethod]
@@ -129,6 +130,36 @@ namespace CalculatorUnitTest
             string delimiters = "//;\n";
             var result = calc.ParseDelimiters(delimiters);
             Assert.AreEqual(result.Count, 2);
+        }
+
+        [TestMethod]
+        public void TestMultiply()
+        {
+            Calculate calc = new Calculate();
+
+            List<int> input = new List<int>() { 2, 3, 6 };
+            var result = calc.Multiply(input);
+            Assert.AreEqual(result, 36);
+        }
+
+        [TestMethod]
+        public void TestDivide()
+        {
+            Calculate calc = new Calculate();
+
+            List<int> input = new List<int>() { 100, 20, 5 };
+            var result = calc.Divide(input);
+            Assert.AreEqual(result, 1);
+        }
+
+        [TestMethod]
+        public void TestSubtract()
+        {
+            Calculate calc = new Calculate();
+
+            List<int> input = new List<int>() { 36, 6, 12 };
+            var result = calc.Subtract(input);
+            Assert.AreEqual(result, 18);
         }
     }
 }
