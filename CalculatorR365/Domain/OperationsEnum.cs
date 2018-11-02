@@ -1,6 +1,6 @@
-﻿namespace Domain
+﻿namespace Domain.Enums
 {
-    public enum Operations
+    public enum SupportedOperations
     {
         Add,
         Multiply,

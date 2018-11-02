@@ -1,4 +1,5 @@
 ﻿using Domain;
+using Domain.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -70,7 +71,7 @@ namespace Calculator
             return convertedToInts;
         }
 
-        public Operations ParseOperation(string numbers)
+        public SupportedOperations ParseOperation(string numbers)
         {
             if (IsOperationSpecified(numbers))
             {
@@ -79,17 +80,17 @@ namespace Calculator
                 switch (oprtationsSign)
                 {
                     case "+":
-                        return Operations.Add;
+                        return SupportedOperations.Add;
                     case "*":
-                        return Operations.Multiply;
+                        return SupportedOperations.Multiply;
                     case "-":
-                        return Operations.Subtract;
+                        return SupportedOperations.Subtract;
                     case "/":
-                        return Operations.Divide;
+                        return SupportedOperations.Divide;
                 }
             }
 
-            return Operations.Add;
+            return SupportedOperations.Add;
         }
 
 
