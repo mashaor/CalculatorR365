@@ -4,11 +4,15 @@ namespace Calculator
 {
     public class Calculate
     {
-        public int ParseInputStringAndCalculate(string numbers)
+        public int ParseAndCalculate(string numbers)
         {
-            InputParser parser = new InputParser();
+            string preParseNewLines = numbers.Replace("\\n", "\n");
 
-            CalculationObject calcObj = parser.ExtractOperationDelimiterNumbers(numbers);
+            InputParser inputParser = new InputParser(preParseNewLines);
+
+            CalculationObject calcObj = new CalculationObject();
+            calcObj.InputNumbers = inputParser.Numbers;
+            calcObj.Operation = inputParser.Operation;
 
             int result = calcObj.PerformCalculation();
 

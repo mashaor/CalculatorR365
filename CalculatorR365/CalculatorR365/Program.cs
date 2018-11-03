@@ -23,8 +23,8 @@ namespace CalculatorR365
             try
             {
                 Calculate calc = new Calculate();
-                string preParseNewLines = numbers.Replace("\\n","\n");
-                result = calc.ParseInputStringAndCalculate(preParseNewLines);
+                
+                result = calc.ParseAndCalculate(numbers);
 
                 Console.WriteLine("Result is: " + result);
             }
