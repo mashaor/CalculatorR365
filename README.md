@@ -10,12 +10,12 @@ Examples:
 
 Add
 Default: 1,3,4
-; Delimiter: //;\n1;3,4
-*** and ^^ Delimiters: //[***][^^]\n1***2^^6***9^^3
+";" Delimiter: //;\n1;3,4
+"***" and "^^" Delimiters: //[***][^^]\n1***2^^6***9^^3
 
 Multiply
 Default delimiter: *\n1,3,4
-*** Delimiter: *\n//[***]\n1***3***4
-* and % delimiters: *\n//[*][%]\n1,3,4
+"***" Delimiter: *\n//[***]\n1***3***4
+"*" and "%" delimiters: *\n//[*][%]\n1,3,4
 
 
